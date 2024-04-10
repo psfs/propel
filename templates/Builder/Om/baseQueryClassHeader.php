@@ -64,7 +64,7 @@
  *
 <?php endif; ?>
  * @method     <?= $modelClass ?>|null findOne(?ConnectionInterface $con = null) Return the first <?= $modelClass ?> matching the query
- * @method     <?= $modelClass ?> findOneOrCreate(?ConnectionInterface $con = null) Return the first <?= $modelClass ?> matching the query, or a new <?= $modelClass ?> object populated from the query conditions when no match is found
+ * @method     <?= $modelClass ?> findOneOrCreate(?ConnectionInterface $con = null) `Return the first <?= $modelClass ?> matching the query, or a new <?= $modelClass ?> object populated from the query conditions when no match is found`
  *
 <?php foreach($columns as $column):?>
  * @method     <?= $modelClass ?>|null findOneBy<?= $column->getPhpName() ?>(<?= $column->getPhpType() ?> $<?= $column->getName() ?>) Return the first <?= $modelClass ?> filtered by the <?= $column->getName() ?> column
