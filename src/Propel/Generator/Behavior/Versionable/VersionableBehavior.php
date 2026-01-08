@@ -58,6 +58,11 @@ class VersionableBehavior extends Behavior
     protected $tableModificationOrder = 80;
 
     /**
+     * @var bool
+     */
+    protected $isVersionable = false;
+
+    /**
      * @return void
      */
     public function modifyDatabase(): void
