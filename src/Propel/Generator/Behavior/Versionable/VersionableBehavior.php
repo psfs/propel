@@ -58,11 +58,6 @@ class VersionableBehavior extends Behavior
     protected $tableModificationOrder = 80;
 
     /**
-     * @var bool
-     */
-    protected $isVersionable = false;
-
-    /**
      * @return void
      */
     public function modifyDatabase(): void
@@ -72,7 +67,7 @@ class VersionableBehavior extends Behavior
                 // don't add the same behavior twice
                 continue;
             }
-            if (property_exists($table, 'isVersionTable')) {
+            if ($table->isAVersionTable()) {
                 // don't add the behavior to version tables
                 continue;
             }
@@ -155,7 +150,7 @@ class VersionableBehavior extends Behavior
                 'skipSql' => $table->isSkipSql(),
                 'identifierQuoting' => $table->isIdentifierQuotingEnabled(),
             ]);
-            $versionTable->isVersionTable = true;
+            $versionTable->setAsVersionTable(true);
             // every behavior adding a table should re-execute database behaviors
             foreach ($database->getBehaviors() as $behavior) {
                 $behavior->modifyDatabase();
