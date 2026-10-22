@@ -938,7 +938,7 @@ class Criteria
      * The name of the table must be used implicitly in the column name,
      * so the Column name must be something like 'TABLE.id'.
      *
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|string $p1 The column to run the comparison on, or a Criterion object.
+     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|string|null $p1 The column to run the comparison on, or a Criterion object.
      * @param mixed $value
      * @param string|int|null $comparison A String.
      *
@@ -949,7 +949,7 @@ class Criteria
         if ($p1 instanceof AbstractCriterion) {
             $this->map[$p1->getTable() . '.' . $p1->getColumn()] = $p1;
         } else {
-            $this->map[$p1] = $this->getCriterionForCondition($p1, $value, $comparison);
+            $this->map[(string)$p1] = $this->getCriterionForCondition($p1, $value, $comparison);
         }
 
         return $this;
@@ -2003,7 +2003,7 @@ class Criteria
      *  - Otherwise, create a classic Criterion based on a column name and a comparison.
      *    <code>$c->getCriterionForCondition(BookTableMap::TITLE, 'War%', Criteria::LIKE);</code>
      *
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|string $p1 A Criterion, or a SQL clause with a question mark placeholder, or a column name
+     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|string|null $p1 A Criterion, or a SQL clause with a question mark placeholder, or a column name
      * @param mixed|null $value The value to bind in the condition
      * @param string|int|null $comparison A Criteria class constant, or a PDO::PARAM_ class constant
      *

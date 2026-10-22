@@ -62,7 +62,7 @@ abstract class AbstractFormatterWithHydration extends AbstractFormatter
         /** @var \Propel\Runtime\Map\TableMap $tableMap */
         $tableMap = $this->tableMap;
         $indexType = $this->getDataFetcher()->getIndexType();
-        $mainKey = $tableMap::getPrimaryKeyHashFromRow($row, 0, $indexType);
+        $mainKey = $tableMap::getPrimaryKeyHashFromRow($row, 0, $indexType) ?? '';
         // we hydrate the main object even in case of a one-to-many relationship
         // in order to get the $col variable increased anyway
         $obj = $this->getSingleObjectFromRow($row, (string)$this->class, $col);
@@ -93,7 +93,7 @@ abstract class AbstractFormatterWithHydration extends AbstractFormatter
             }
 
             // hydrate related object or take it from registry
-            $key = $modelWith->getTableMap()::getPrimaryKeyHashFromRow($row, $col, $indexType);
+            $key = $modelWith->getTableMap()::getPrimaryKeyHashFromRow($row, $col, $indexType) ?? '';
             // we hydrate the main object even in case of a one-to-many relationship
             // in order to get the $col variable increased anyway
             $secondaryObject = $this->getSingleObjectFromRow($row, $class, $col);

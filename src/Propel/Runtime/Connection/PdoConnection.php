@@ -44,6 +44,27 @@ class PdoConnection implements ConnectionInterface
     }
 
     /**
+     * Registers a user defined function for use in SQLite statements.
+     *
+     * PDO::sqliteCreateFunction() is deprecated as of PHP 8.5 in favor of Pdo\Sqlite::createFunction(),
+     * which is only available if the proxied connection is a Pdo\Sqlite instance (PHP 8.4 and above),
+     * so the method to call has to be detected at runtime.
+     *
+     * @param string $functionName Name of the SQL function to be used in SQL statements.
+     * @param callable $callback The function to be used to handle the SQL function call.
+     * @param int $numArgs The number of arguments the SQL function takes, -1 for a variable number.
+     * @param int $flags A bitmask of PDO::SQLITE_DETERMINISTIC and PDO::SQLITE_DIRECTONLY.
+     *
+     * @return bool
+     */
+    public function sqliteCreateFunction(string $functionName, callable $callback, int $numArgs = -1, int $flags = 0): bool
+    {
+        $method = method_exists($this->pdo, 'createFunction') ? 'createFunction' : 'sqliteCreateFunction';
+
+        return $this->pdo->$method($functionName, $callback, $numArgs, $flags);
+    }
+
+    /**
      * @param string $name The datasource name associated to this connection
      *
      * @return void

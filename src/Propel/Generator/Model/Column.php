@@ -752,6 +752,21 @@ class Column extends MappingModel
     }
 
     /**
+     * Returns the type to use when casting a value in PHP sources.
+     *
+     * This is the canonical name of the type returned by getPhpType(), as the
+     * non-canonical cast syntax (i.e. `(boolean)` or `(double)`) is deprecated as of PHP 8.5.
+     *
+     * @see \Propel\Generator\Model\PropelTypes::getPhpCastType()
+     *
+     * @return string
+     */
+    public function getPhpCastType(): string
+    {
+        return PropelTypes::getPhpCastType($this->getPhpType());
+    }
+
+    /**
      * Returns the location of this column within the table (one-based).
      *
      * @return int|null
@@ -1253,9 +1268,9 @@ class Column extends MappingModel
      *
      * @return int
      */
-    public function getPDOType(): int
+    public function getPdoType(): int
     {
-        return PropelTypes::getPDOType($this->getType());
+        return PropelTypes::getPdoType($this->getType());
     }
 
     /**

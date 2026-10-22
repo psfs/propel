@@ -1713,7 +1713,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             }";
         } elseif ($column->isPhpPrimitiveType()) {
             $script .= "
-            \$this->$clo = (\$firstColumn !== null) ? (" . $column->getPhpType() . ') $firstColumn : null;';
+            \$this->$clo = (\$firstColumn !== null) ? (" . $column->getPhpCastType() . ') $firstColumn : null;';
         } elseif ($column->isPhpObjectType()) {
             $script .= "
             \$this->$clo = (\$firstColumn !== null) ? new " . $column->getPhpType() . '($firstColumn) : null;';
@@ -2423,7 +2423,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             if (is_string(\$v)) {
                 \$v = in_array(strtolower(\$v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
             } else {
-                \$v = (boolean) \$v;
+                \$v = (bool) \$v;
             }
         }
 
@@ -2481,7 +2481,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         if ($col->isPhpPrimitiveType()) {
             $script .= "
         if (\$v !== null) {
-            \$v = (" . $col->getPhpType() . ") \$v;
+            \$v = (" . $col->getPhpCastType() . ") \$v;
         }
 ";
         }
@@ -2741,7 +2741,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             \$this->$clo = (\$col) ? UuidConverter::binToUuid(\$col, $uuidSwapFlag) : null;";
                 } elseif ($col->isPhpPrimitiveType()) {
                     $script .= "
-            \$this->$clo = (null !== \$col) ? (" . $col->getPhpType() . ') $col : null;';
+            \$this->$clo = (null !== \$col) ? (" . $col->getPhpCastType() . ') $col : null;';
                 } elseif ($col->getType() === PropelTypes::OBJECT) {
                     $script .= "
             \$this->$clo = \$col;";
@@ -6590,7 +6590,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             $script .= "
         if (null === \$this->{$columnProperty}) {
             try {";
-            $script .= $platform->getIdentifierPhp('$this->' . $columnProperty, '$con', $primaryKeyMethodInfo, '                ', $column->getPhpType());
+            $script .= $platform->getIdentifierPhp('$this->' . $columnProperty, '$con', $primaryKeyMethodInfo, '                ', $column->getPhpCastType());
             $script .= "
             } catch (Exception \$e) {
                 throw new PropelException('Unable to get sequence id.', 0, \$e);

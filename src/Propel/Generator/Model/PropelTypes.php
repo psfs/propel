@@ -501,6 +501,21 @@ class PropelTypes
     ];
 
     /**
+     * Maps the non-canonical PHP type names to the canonical cast names.
+     *
+     * The non-canonical cast syntax (i.e. `(boolean)` or `(double)`) is deprecated as of PHP 8.5,
+     * so only the canonical names must be used when a cast is written into generated code.
+     *
+     * @var array<string, string>
+     */
+    private static $phpNativeToCastMap = [
+        'boolean' => 'bool',
+        'integer' => 'int',
+        'double' => 'float',
+        'real' => 'float',
+    ];
+
+    /**
      * Returns the native PHP type which corresponds to the
      * mapping type provided. Use in the base object class generation.
      *
@@ -514,13 +529,26 @@ class PropelTypes
     }
 
     /**
+     * Returns the canonical name of the given PHP type, to be used in a cast
+     * expression written into generated code.
+     *
+     * @param string $phpType
+     *
+     * @return string
+     */
+    public static function getPhpCastType(string $phpType): string
+    {
+        return self::$phpNativeToCastMap[$phpType] ?? $phpType;
+    }
+
+    /**
      * Returns the PDO type (PDO::PARAM_* constant) value.
      *
      * @param string $type
      *
      * @return int
      */
-    public static function getPDOType(string $type): int
+    public static function getPdoType(string $type): int
     {
         return self::$mappingTypeToPDOTypeMap[$type];
     }

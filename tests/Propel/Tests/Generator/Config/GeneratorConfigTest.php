@@ -35,7 +35,10 @@ class GeneratorConfigTest extends TestCase
     {
         $ref = new ReflectionClass('\\Propel\\Common\\Config\\ConfigurationManager');
         $refProp = $ref->getProperty('config');
-        $refProp->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            // ReflectionProperty::setAccessible() has no effect since PHP 8.1 and is deprecated as of PHP 8.5.
+            $refProp->setAccessible(true);
+        }
         $refProp->setValue($this->generatorConfig, $config);
     }
 
